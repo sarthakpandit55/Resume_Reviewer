@@ -3,17 +3,14 @@ import PyPDF2
 import io
 import os
 import google.generativeai as genai
-from dotenv import load_dotenv
-
-load_dotenv()
 
 st.set_page_config(page_title="AI Resume Reviewer", page_icon="📃", layout="centered")
 
 st.title("AI Resume Reviewer")
 st.markdown("Upload your resume and get AI-powered feedback tailored to your needs!")
 
-# Api key
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+# Api key from sectrets of streamlit
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=GEMINI_API_KEY)
 
 uploaded_file = st.file_uploader("Upload your Resume(PDF or TXT)", type=["pdf", "txt"])
