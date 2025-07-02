@@ -11,6 +11,7 @@ st.markdown("Upload your resume and get AI-powered feedback tailored to your nee
 
 # Api key from sectrets of streamlit
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+st.success("API key loaded!")  # Debug message
 genai.configure(api_key=GEMINI_API_KEY)
 
 uploaded_file = st.file_uploader("Upload your Resume(PDF or TXT)", type=["pdf", "txt"])
@@ -44,6 +45,8 @@ if analyze and uploaded_file:
             st.error("file does not have any content...")
             st.stop()
 
+        st.write(f"Content length: {len(file_content)} characters")  # Debug: content length
+
         prompt = f"""Please analyze this resume and provide constructive feedback.
         Focus on the following aspects:
         1. Content clarity and impact
@@ -56,12 +59,13 @@ if analyze and uploaded_file:
 
         Please provide your analysis in a clear, structured format with specific recommendations."""
 
-        model = genai.GenerativeModel("gemini-1.5-flash")  # or "gemini-1.5-pro" for higher quality
-        response = model.generate_content(prompt)
+        # Gemini API call with spinner and config
+        with st.spinner("Analyzing resume..."):
+            model = genai.GenerativeModel("gemini-1.5-flash")  # or "gemini-1.5-pro" for higher quality
+            response = model.generate_content(prompt, generation_config={"max_output_tokens": 1024})
 
         st.markdown("### Analysis Results")
         st.markdown(response.text)
-
 
     except Exception as e:
         st.error(f"An error occured: {str(e)}")
