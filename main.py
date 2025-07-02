@@ -11,7 +11,6 @@ st.markdown("Upload your resume and get AI-powered feedback tailored to your nee
 
 # Api key from sectrets of streamlit
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-st.success("API key loaded!")  # Debug message
 genai.configure(api_key=GEMINI_API_KEY)
 
 uploaded_file = st.file_uploader("Upload your Resume(PDF or TXT)", type=["pdf", "txt"])
