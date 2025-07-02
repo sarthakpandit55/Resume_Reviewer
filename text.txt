@@ -1,0 +1,5 @@
+steramlit:-
+
+steramlit is a library that is used to create user interface in python.
+to run the file in Streamlit we use the command : streamlit run main.py
+if we are using it in virtual environment the we should use the command : uv run streamlit run main.py
